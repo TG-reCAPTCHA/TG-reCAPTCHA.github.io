@@ -1,6 +1,6 @@
 const [jwt, botname, g_sitekey] = location.hash.replace("#", "").split(";");
 const requestInfo = JSON.parse(window.atob(jwt.split('.')[1].replace(/-/g, '+').replace(/_/g, '/'))).data;
-$(".gname").text(requestInfo.gname);
+$(".gname").text(decodeURIComponent(requestInfo.gname));
 $(".uid").text(requestInfo.uid);
 $(".gid").text(requestInfo.gid);
 $(".botname").text(botname);
