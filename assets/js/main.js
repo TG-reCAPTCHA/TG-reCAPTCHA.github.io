@@ -17,9 +17,13 @@ var verifyCallback = function (response) {
         const id = data["key"];
         if (id){
             window.location.href = "https://t.me/" + botname + "?start=" + id;
+            $(".callTG").attr("src", "tg://resolve?domain=" + + botname + "&start=" + id);
         }
-        document.getElementById("recaptcha-response").innerText = "/verify " + window.btoa(payload);
-        document.getElementById("guideForManual").style.display = '';
+
+        setTimeout(()=>{
+            document.getElementById("recaptcha-response").innerText = "/verify " + window.btoa(payload);
+            document.getElementById("guideForManual").style.display = '';
+        }, 2000)
     };
 
     $.ajax("https://bytebin.lucko.me/post", {
