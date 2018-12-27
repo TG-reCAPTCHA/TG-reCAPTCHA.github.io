@@ -1,9 +1,10 @@
-const [jwt, gname, uid, gid, botname, g_sitekey] = location.hash.replace("#", "").split(";");
-$(".gname").text(decodeURI(gname));
-$(".uid").text(decodeURI(uid));
-$(".gid").text(decodeURI(gid));
-$(".botname").text(decodeURI(botname));
-$(".botname").attr("href", "https://t.me/" + decodeURI(botname));
+const [jwt, botname, g_sitekey] = location.hash.replace("#", "").split(";");
+const requestInfo = JSON.parse(window.atob(jwt.split('.')[1].replace(/-/g, '+').replace(/_/g, '/'))).data;
+$(".gname").text(requestInfo.gname);
+$(".uid").text(requestInfo.uid);
+$(".gid").text(requestInfo.gid);
+$(".botname").text(botname);
+$(".botname").attr("href", "https://t.me/" + botname);
 
 var verifyCallback = function (response) {
 
@@ -17,7 +18,7 @@ var verifyCallback = function (response) {
         if (id){
             window.location.href = "https://t.me/" + botname + "?start=" + id;
         }
-        document.getElementById("recaptcha-response").innerText = "/verify " + btoa(payload);
+        document.getElementById("recaptcha-response").innerText = "/verify " + window.btoa(payload);
         document.getElementById("guideForManual").style.display = '';
     };
 
