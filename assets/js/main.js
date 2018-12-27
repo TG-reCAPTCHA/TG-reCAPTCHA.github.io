@@ -16,7 +16,6 @@ var verifyCallback = function (response) {
     const callback = function (data) {
         const id = data["key"];
         if (id){
-            window.location.href = "https://t.me/" + botname + "?start=" + id;
             $(".callTG").attr("src", "tg://resolve?domain=" + + botname + "&start=" + id);
         }
 
