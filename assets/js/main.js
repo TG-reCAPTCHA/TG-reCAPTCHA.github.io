@@ -18,6 +18,7 @@ var verifyCallback = function (response) {
         if (id){
             const protoUrl = "tg://resolve?domain=" + botname + "&start=" + id;
             $(".botname").attr("href", protoUrl);
+            $(".metaURL").attr("content", protoUrl)
             if ((typeof UAParser === "function") && UAParser().os.name === "iOS") {
                 var iframeContEl = document.getElementById('tgme_frame_cont') || document.body;
                 var iframeEl = document.createElement('iframe');
