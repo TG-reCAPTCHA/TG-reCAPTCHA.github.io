@@ -13,10 +13,13 @@ var verifyCallback = function (response) {
         "gresponse": response
     });
 
+    const $callTG = $('#callTG');
+
     const callback = function (data) {
         const id = data["key"];
-        if (id){
-            $("#callTG").attr("src", "tg://resolve?domain=" + botname + "&start=" + id);
+        if (id && $callTG.length > 0){
+            $callTG.attr("href", "tg://resolve?domain=" + botname + "&start=" + id);
+            $callTG[0].click();
         }
 
         setTimeout(()=>{
