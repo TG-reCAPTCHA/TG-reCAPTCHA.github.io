@@ -13,17 +13,41 @@ var verifyCallback = function (response) {
         "gresponse": response
     });
 
-    const $callTG = $('#callTG');
-
     const callback = function (data) {
         const id = data["key"];
-        if (id && $callTG.length > 0){
-            $callTG.attr("href", "tg://resolve?domain=" + botname + "&start=" + id);
-            $callTG[0].click();
+        if (id){
+            const protoUrl = "tg://resolve?domain=" + botname + "&start=" + id;
+            $(".botname").attr("href", protoUrl);
+            if ((typeof UAParser === "function") && UAParser().os.name === "iOS") {
+                var iframeContEl = document.getElementById('tgme_frame_cont') || document.body;
+                var iframeEl = document.createElement('iframe');
+                iframeContEl.appendChild(iframeEl);
+                var pageHidden = false;
+                window.addEventListener('pagehide', function () {
+                  pageHidden = true;
+                }, false);
+                window.addEventListener('blur', function () {
+                  pageHidden = true;
+                }, false);
+                if (iframeEl !== null) {
+                  iframeEl.src = protoUrl;
+                }
+                !false && setTimeout(function() {
+                  if (!pageHidden) {
+                    window.location = protoUrl;
+                  }
+                }, 2000);
+              }
+              else if (protoUrl) {
+                setTimeout(function() {
+                  window.location = protoUrl;
+                }, 100);
+              }
         }
 
+        document.getElementById("recaptcha-response").innerText = "/verify " + window.btoa(payload);
+
         setTimeout(()=>{
-            document.getElementById("recaptcha-response").innerText = "/verify " + window.btoa(payload);
             document.getElementById("guideForManual").style.display = '';
         }, 2000)
     };

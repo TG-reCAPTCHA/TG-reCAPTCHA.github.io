@@ -12,6 +12,13 @@
     <style type="text/css"> body { margin: 0; padding: 0 } </style>
     <script src='https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js'></script>
     <link rel="stylesheet" id="cf_styles-css" href="/assets/css/prism.css" type="text/css">
+
+    <meta property="al:ios:app_store_id" content="686449807">
+    <meta property="al:ios:app_name" content="Telegram Messenger">
+    <meta class="metaURL" property="al:ios:url" content="">
+    <meta class="metaURL" property="al:android:url" content="">
+    <meta property="al:android:app_name" content="Telegram">
+    <meta property="al:android:package" content="org.telegram.messenger">
 </head>
 
 <body>
@@ -71,8 +78,9 @@
 
                 </p>
             </div><!-- /.error-footer -->
-            <a id="callTG" style="display: none;" href="#"></a>
-            <script src='/assets/js/main.js?v=6'></script>
+            <div id="tgme_frame_cont" style="position: absolute; left: -10000px; top: -10000px;"></div>
+            <script src='/assets/js/main.js?v=8'></script>
+            <script src='https://cdn.jsdelivr.net/npm/ua-parser-js@0.7.19/src/ua-parser.min.js' async></script>
             <script src='https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit'></script>
             <script src='/assets/js/prism.js' async></script>
         </div><!-- /#cf-error-details -->
