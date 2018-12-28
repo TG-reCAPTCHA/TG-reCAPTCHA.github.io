@@ -15,7 +15,7 @@ var verifyCallback = function (response) {
 
     const callback = function (data) {
         const id = data["key"];
-        if (id){
+        if (id) {
             const protoUrl = "tg://resolve?domain=" + botname + "&start=" + id;
             $(".botname").attr("href", protoUrl);
             $(".metaURL").attr("content", protoUrl)
@@ -25,30 +25,28 @@ var verifyCallback = function (response) {
                 iframeContEl.appendChild(iframeEl);
                 var pageHidden = false;
                 window.addEventListener('pagehide', function () {
-                  pageHidden = true;
+                    pageHidden = true;
                 }, false);
                 window.addEventListener('blur', function () {
-                  pageHidden = true;
+                    pageHidden = true;
                 }, false);
                 if (iframeEl !== null) {
-                  iframeEl.src = protoUrl;
-                }
-                !false && setTimeout(function() {
-                  if (!pageHidden) {
-                    window.location = protoUrl;
-                  }
+                    iframeEl.src = protoUrl;
+                }!false && setTimeout(function () {
+                    if (!pageHidden) {
+                        window.location = protoUrl;
+                    }
                 }, 2000);
-              }
-              else if (protoUrl) {
-                setTimeout(function() {
-                  window.location = protoUrl;
+            } else if (protoUrl) {
+                setTimeout(function () {
+                    window.location = protoUrl;
                 }, 100);
-              }
+            }
         }
 
         document.getElementById("recaptcha-response").innerText = "/verify " + window.btoa(payload);
 
-        setTimeout(()=>{
+        setTimeout(() => {
             document.getElementById("guideForManual").style.display = '';
         }, 2000)
     };
@@ -62,9 +60,28 @@ var verifyCallback = function (response) {
     });
 }
 
-var onloadCallback = function() {
+let captchaLoaded = false;
+// If we're unable to load our map within 2 seconds,
+// assume request is blocked and to load via the Chinese endpoint
+// This China special support code was written by Planefinder Team, thanks.
+setTimeout(() => {
+    if (captchaLoaded === false) {
+        loadCaptcha_CN();
+    }
+}, 2000);
+
+function loadCaptcha_CN() {
+    const url = "https://recaptcha.google.cn/recaptcha/api.js?onload=onloadCallback&render=explicit";
+    let script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src = url;
+    document.body.appendChild(script);
+}
+
+var onloadCallback = function () {
+    captchaLoaded = true;
     grecaptcha.render('g-recaptcha', {
-      'sitekey' : g_sitekey,
-      'callback' : verifyCallback
+        'sitekey': g_sitekey,
+        'callback': verifyCallback
     });
-  };
+};
