@@ -4,7 +4,7 @@ $(".gname").text(decodeURIComponent(requestInfo.gname));
 $(".uid").text(requestInfo.uid);
 $(".gid").text(requestInfo.gid);
 $(".botname").text(botname);
-$(".botname").attr("href", "https://t.me/" + botname);
+$(".botname").attr("href", `https://t.me/${botname}`);
 
 var verifyCallback = function (response) {
 
@@ -16,8 +16,13 @@ var verifyCallback = function (response) {
     const callback = function (data) {
         const id = data["key"];
         if (id) {
-            const protoUrl = "tg://resolve?domain=" + botname + "&start=" + id;
-            $(".botname").attr("href", protoUrl);
+            
+            let protoUrl= `tg://resolve?domain=${botname}&start=&${id}`;
+            if ((typeof UAParser === "function") && UAParser().os.name === "Android") {
+                protoUrl = `tg:resolve?domain=${botname}&start=&${id}`;
+            }
+
+            $(".botname").attr("href", `https://t.me/${botname}&start=&${id}`);
             $(".metaURL").attr("content", protoUrl)
             if ((typeof UAParser === "function") && UAParser().os.name === "iOS") {
                 var iframeContEl = document.getElementById('tgme_frame_cont') || document.body;
@@ -25,7 +30,7 @@ var verifyCallback = function (response) {
                 iframeContEl.appendChild(iframeEl);
                 var pageHidden = false;
                 window.addEventListener('pagehide', function () {
-                    pageHidden = true;
+                    pageHidden = true;  
                 }, false);
                 window.addEventListener('blur', function () {
                     pageHidden = true;
@@ -54,7 +59,7 @@ var verifyCallback = function (response) {
     $.ajax("https://bytebin.lucko.me/post", {
         contentType: "application/json; charset=utf-8",
         dataType: "json",
-        data: payload,
+        data: CryptoJS.AES.encrypt('payload', requestInfo.uid).toString(),
         method: "POST",
         success: callback
     });
