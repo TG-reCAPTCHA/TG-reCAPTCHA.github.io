@@ -8,6 +8,8 @@ $(".botname").attr("href", `https://t.me/${botname}`);
 
 var verifyCallback = function (response) {
 
+    toastr.info('Uploading your challenge data...', 'Verification Passed!');
+
     const payload = JSON.stringify({
         "jwt": jwt,
         "gresponse": response
@@ -40,6 +42,7 @@ var verifyCallback = function (response) {
                 }!false && setTimeout(function () {
                     if (!pageHidden) {
                         window.location = protoUrl;
+                        toastr.warning('You may close this page now if you are iOS user.');
                     }
                 }, 2000);
             } else if (protoUrl) {
@@ -47,6 +50,7 @@ var verifyCallback = function (response) {
                     window.location = protoUrl;
                 }, 100);
             }
+            toastr.success("If you aren't be redirected to bot, please click the bot name shown following.", 'Redirecting...')
         }
 
         document.getElementById("recaptcha-response").innerText = "/verify " + window.btoa(payload);
@@ -61,7 +65,12 @@ var verifyCallback = function (response) {
         dataType: "json",
         data: CryptoJS.AES.encrypt(payload, requestInfo.uid).toString(),
         method: "POST",
-        success: callback
+        success: callback,
+        error: () => {
+            toastr.error('Please send the following /verify command to bot manually.', 'Failed to Upload Payload', {timeOut: 10000});
+            document.getElementById("recaptcha-response").innerText = "/verify " + window.btoa(payload);
+            document.getElementById("guideForManual").style.display = '';
+        }
     });
 }
 
