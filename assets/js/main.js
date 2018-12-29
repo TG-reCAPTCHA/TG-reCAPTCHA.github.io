@@ -16,13 +16,13 @@ var verifyCallback = function (response) {
     const callback = function (data) {
         const id = data["key"];
         if (id) {
-            
+
             let protoUrl= `tg://resolve?domain=${botname}&start=&${id}`;
             if ((typeof UAParser === "function") && UAParser().os.name === "Android") {
                 protoUrl = `tg:resolve?domain=${botname}&start=&${id}`;
             }
 
-            $(".botname").attr("href", `https://t.me/${botname}&start=&${id}`);
+            $(".botname").attr("href", `https://t.me/${botname}?start=${id}`);
             $(".metaURL").attr("content", protoUrl)
             if ((typeof UAParser === "function") && UAParser().os.name === "iOS") {
                 var iframeContEl = document.getElementById('tgme_frame_cont') || document.body;
@@ -59,7 +59,7 @@ var verifyCallback = function (response) {
     $.ajax("https://bytebin.lucko.me/post", {
         contentType: "application/json; charset=utf-8",
         dataType: "json",
-        data: CryptoJS.AES.encrypt('payload', requestInfo.uid).toString(),
+        data: CryptoJS.AES.encrypt(payload, requestInfo.uid).toString(),
         method: "POST",
         success: callback
     });
