@@ -173,7 +173,7 @@
     position: relative;
     text-align: left;
     width: 100%;
-    z-index: 999999999;
+    z-index: 99999;
     color: #404040 !important;
     font-family: "Open Sans", Helvetica, Arial, sans-serif !important;
     font-size: 15px !important;
@@ -826,7 +826,7 @@
     border-bottom: 3px solid #f68b1f;
     padding: 15px 15px 20px;
     position: relative;
-    z-index: 999999999;
+    z-index: 99999;
     -webkit-box-shadow: 0 2px 8px rgba(0, 0, 0, .2);
     -moz-box-shadow: 0 2px 8px rgba(0, 0, 0, .2);
     box-shadow: 0 2px 8px rgba(0, 0, 0, .2)

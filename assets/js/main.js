@@ -101,7 +101,7 @@ var onloadCallback = function () {
     });
 };
 
-windows.addEventListener("load",() => {
+window.addEventListener("load",() => {
     if (Math.floor(new Date() / 1000) > requestInfo.exp) {
         toastr.error(`You may like to leave and rejoin the group ${decodeURIComponent(requestInfo.data.gname)} for a new token.`, 'Token Expired', {timeOut: 5000})
     }
