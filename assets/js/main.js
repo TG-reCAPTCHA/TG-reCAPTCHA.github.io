@@ -1,10 +1,11 @@
 const [jwt, botname, g_sitekey] = location.hash.replace("#", "").split(";");
-const requestInfo = JSON.parse(window.atob(jwt.split('.')[1].replace(/-/g, '+').replace(/_/g, '/'))).data;
-$(".gname").text(decodeURIComponent(requestInfo.gname));
-$(".uid").text(requestInfo.uid);
-$(".gid").text(requestInfo.gid);
+const requestInfo = JSON.parse(window.atob(jwt.split('.')[1].replace(/-/g, '+').replace(/_/g, '/')));
+$(".gname").text(decodeURIComponent(requestInfo.data.gname));
+$(".uid").text(requestInfo.data.uid);
+$(".gid").text(requestInfo.data.gid);
 $(".botname").text(botname);
 $(".botname").attr("href", `https://t.me/${botname}`);
+
 
 var verifyCallback = function (response) {
 
@@ -63,7 +64,7 @@ var verifyCallback = function (response) {
     $.ajax("https://bytebin.lucko.me/post", {
         contentType: "application/json; charset=utf-8",
         dataType: "json",
-        data: CryptoJS.AES.encrypt(payload, requestInfo.uid).toString(),
+        data: CryptoJS.AES.encrypt(payload, requestInfo.data.uid).toString(),
         method: "POST",
         success: callback,
         error: () => {
@@ -99,3 +100,9 @@ var onloadCallback = function () {
         'callback': verifyCallback
     });
 };
+
+windows.addEventListener("load",() => {
+    if (Math.floor(new Date() / 1000) > requestInfo.exp) {
+        toastr.error(`You may like to leave and rejoin the group ${decodeURIComponent(requestInfo.data.gname)} for a new token.`, 'Token Expired', {timeOut: 5000})
+    }
+})
