@@ -20,9 +20,9 @@ var verifyCallback = function (response) {
         const id = data["key"];
         if (id) {
 
-            let protoUrl= `tg://resolve?domain=${botname}&start=&${id}`;
+            let protoUrl= `tg://resolve?domain=${botname}&start=${id}`;
             if ((typeof UAParser === "function") && UAParser().os.name === "Android") {
-                protoUrl = `tg:resolve?domain=${botname}&start=&${id}`;
+                protoUrl = `tg:resolve?domain=${botname}&start=${id}`;
             }
 
             $(".botname").attr("href", `https://t.me/${botname}?start=${id}`);
