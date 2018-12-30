@@ -95,14 +95,12 @@ function loadCaptcha_CN() {
 
 var onloadCallback = function () {
     captchaLoaded = true;
+    if (Math.floor(new Date() / 1000) > requestInfo.exp) {
+        toastr.error(`You may like to leave and rejoin the group ${decodeURIComponent(requestInfo.data.gname)} for a new token.`, 'Token Expired', {timeOut: 0})
+        throw new Error("Token Expired");
+    }
     grecaptcha.render('g-recaptcha', {
         'sitekey': g_sitekey,
         'callback': verifyCallback
     });
 };
-
-window.addEventListener("load",() => {
-    if (Math.floor(new Date() / 1000) > requestInfo.exp) {
-        toastr.error(`You may like to leave and rejoin the group ${decodeURIComponent(requestInfo.data.gname)} for a new token.`, 'Token Expired', {timeOut: 0})
-    }
-})
